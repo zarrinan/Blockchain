@@ -111,7 +111,6 @@ class Blockchain(object):
         :return: True if the resulting hash is a valid proof, False otherwise
         """
         # TODO
-        # print(f"i will now check if {proof} is valid")
         guess = block_string + str(proof) 
         guess = guess.encode()
 
@@ -143,8 +142,8 @@ def mine():
     if 'id' not in data or 'proof' not in data:
         response = {'message': 'missing values'}
         return jsonify(response), 400
+        
     # Run the proof of work algorithm to get the next proof
-    # print("We shall now mine a block!")
     proof = data['proof']
     last_block = blockchain.last_block 
     block_string = json.dumps(last_block, sort_keys=True)
@@ -192,9 +191,6 @@ def new_transaction():
     if 'recipient' not in data or 'amount' not in data or 'sender' not in data:
         response = {'message' : 'Error: missing values'}
         return jsonify(response), 400
-    
-    # in the real world, we would probably want to verify that this transaction is legit
-    # for now, we can allow anyone to add whatever they want
 
     # create the new transaction
     index = blockchain.new_transaction(data['sender'], data['recipient'], data['amount'])
@@ -202,6 +198,5 @@ def new_transaction():
     return jsonify(response), 200
 
 
-# Run the program on port 5000
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000)
+    app.run(host='0.0.0.0', port=5000)
